@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css">
     <style>
         :root {
             --kg-bg: #f6f7fb;
@@ -255,6 +256,71 @@
             background: #f8fafc;
         }
 
+        .dataTables_wrapper {
+            padding: 2px;
+        }
+
+        .dataTables_wrapper .row:first-child {
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid var(--kg-border);
+            border-radius: 8px;
+            margin: 0 0 14px;
+            padding: 12px 10px;
+        }
+
+        .dataTables_wrapper .row:last-child {
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .dataTables_length label,
+        .dataTables_filter label,
+        .dataTables_info {
+            color: var(--kg-muted);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .dataTables_length select {
+            border: 1px solid #d9e1ec;
+            border-radius: 8px;
+            margin: 0 6px;
+            min-height: 38px;
+            padding: 4px 28px 4px 10px;
+        }
+
+        .dataTables_filter input {
+            border: 1px solid #d9e1ec;
+            border-radius: 8px;
+            margin-left: 8px;
+            min-height: 38px;
+            padding: 6px 12px;
+        }
+
+        .dataTables_filter input:focus,
+        .dataTables_length select:focus {
+            border-color: var(--kg-teal);
+            box-shadow: 0 0 0 0.16rem rgba(20, 184, 166, 0.15);
+            outline: 0;
+        }
+
+        .page-item .page-link {
+            border-color: var(--kg-border);
+            color: var(--kg-teal);
+            font-weight: 700;
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, var(--kg-teal), var(--kg-violet));
+            border-color: transparent;
+        }
+
+        .table-action-cell {
+            white-space: nowrap;
+        }
+
         .modal-header {
             border-bottom: 1px solid var(--kg-border);
         }
@@ -363,23 +429,9 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('pengaduan.index', ['status' => 'diteruskan_lapangan']) }}" class="nav-link {{ request()->fullUrlIs(route('pengaduan.index', ['status' => 'diteruskan_lapangan'])) ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-tools"></i>
-                                <p>Tugas Perbaikan</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
                             <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-alt"></i>
                                 <p>Laporan</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('laporan.cetak') }}" class="nav-link {{ request()->routeIs('laporan.cetak') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-print"></i>
-                                <p>Cetak Laporan</p>
                             </a>
                         </li>
                         @endif
@@ -420,12 +472,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('laporan.cetak') }}" class="nav-link {{ request()->routeIs('laporan.cetak') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-print"></i>
-                                <p>Cetak Laporan</p>
-                            </a>
-                        </li>
                         @endif
 
                     </ul>
@@ -459,6 +505,35 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(function () {
+            $('.kg-datatable').DataTable({
+                autoWidth: false,
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Semua']],
+                language: {
+                    search: 'Cari:',
+                    lengthMenu: 'Tampilkan _MENU_ data',
+                    info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
+                    infoEmpty: 'Tidak ada data yang ditampilkan',
+                    infoFiltered: '(difilter dari _MAX_ total data)',
+                    zeroRecords: 'Data tidak ditemukan',
+                    emptyTable: 'Belum ada data',
+                    paginate: {
+                        first: 'Pertama',
+                        last: 'Terakhir',
+                        next: 'Berikutnya',
+                        previous: 'Sebelumnya'
+                    }
+                },
+                columnDefs: [
+                    { targets: 'no-sort', orderable: false, searchable: false }
+                ]
+            });
+        });
+    </script>
 </body>
 
 </html>

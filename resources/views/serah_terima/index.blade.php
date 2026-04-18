@@ -28,7 +28,7 @@
         </div>
 
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover kg-datatable">
                 <thead class="text-center">
                     <tr>
                         <th width="60">No</th>
@@ -37,7 +37,7 @@
                         <th>Blok</th>
                         <th>Tanggal Serah Terima</th>
                         <th>Keterangan</th>
-                        <th width="180">Aksi</th>
+                        <th width="180" class="no-sort">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +49,7 @@
                             <td class="text-center">{{ $item->blok }}</td>
                             <td class="text-center">{{ $item->tanggal_serah_terima }}</td>
                             <td>{{ $item->keterangan ?? '-' }}</td>
-                            <td class="text-center">
+                            <td class="text-center table-action-cell">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSerahTerimaModal{{ $item->id }}">
                                     <i class="fas fa-edit"></i> Edit
                                 </button>

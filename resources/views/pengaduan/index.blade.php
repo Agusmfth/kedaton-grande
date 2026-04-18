@@ -120,7 +120,7 @@
         <div class="card-body">
             @if($pengaduans->count() > 0)
             <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle">
+                <table class="table table-bordered table-hover align-middle kg-datatable">
                     <thead class="bg-light">
                         <tr class="text-center">
                             <th style="width: 60px;">No</th>
@@ -133,7 +133,7 @@
                             <th>Keluhan</th>
                             <th style="width: 180px;">Status</th>
                             <th style="width: 140px;">Tanggal</th>
-                            <th style="width: 320px;">Aksi</th>
+                            <th style="width: 320px;" class="no-sort">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,7 +148,7 @@
                             <td class="font-weight-semibold">{{ $p->judul }}</td>
                             <td>{{ $p->keluhan }}</td>
 
-                            <td class="text-center">
+                            <td class="text-center table-action-cell">
                                 @if($p->status == 'baru')
                                 <span class="badge badge-secondary px-3 py-2">Baru</span>
                                 @elseif($p->status == 'diproses')

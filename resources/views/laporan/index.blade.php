@@ -102,7 +102,7 @@
             </h3>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover kg-datatable">
                 <thead class="text-center bg-light">
                     <tr>
                         <th width="60">No</th>
@@ -140,7 +140,7 @@
             </h3>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover kg-datatable">
                 <thead class="text-center bg-light">
                     <tr>
                         <th width="60">No</th>

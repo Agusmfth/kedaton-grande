@@ -418,12 +418,6 @@
                                             Ingat saya
                                         </label>
                                     </div>
-
-                                    @if (Route::has('password.request'))
-                                        <a href="{{ route('password.request') }}" class="helper-link">
-                                            Lupa password?
-                                        </a>
-                                    @endif
                                 </div>
 
                                 <div class="d-grid">
