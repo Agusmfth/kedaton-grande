@@ -3,13 +3,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $jumlahSerahTerima }}</h3>
                     <p>Serah Terima Kunci</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-key"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('serah-terima.index') }}" class="small-box-footer">
                     Detail <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -18,13 +18,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $jumlahPengaduan }}</h3>
                     <p>Pengaduan Konsumen</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-comments"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('pengaduan.index') }}" class="small-box-footer">
                     Detail <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -33,13 +33,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $jumlahTugasPerbaikan }}</h3>
                     <p>Tugas Perbaikan</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-tools"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('pengaduan.index', ['status' => 'diteruskan_lapangan']) }}" class="small-box-footer">
                     Detail <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -48,13 +48,13 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $jumlahLaporan }}</h3>
                     <p>Laporan</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-file-alt"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('pengaduan.index', ['status' => 'selesai']) }}" class="small-box-footer">
                     Detail <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>

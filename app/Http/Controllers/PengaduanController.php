@@ -11,13 +11,21 @@ class PengaduanController extends Controller
 {
     public function index()
     {
+        $status = request('status');
+
         if (auth()->user()->role == 'konsumen') {
-            $pengaduans = Pengaduan::where('user_id', auth()->id())->get();
+            $query = Pengaduan::where('user_id', auth()->id());
         } else {
-            $pengaduans = Pengaduan::all();
+            $query = Pengaduan::query();
         }
 
-        return view('pengaduan.index', compact('pengaduans'));
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $pengaduans = $query->latest()->get();
+
+        return view('pengaduan.index', compact('pengaduans', 'status'));
     }
 
     public function show($id)
@@ -54,7 +62,7 @@ class PengaduanController extends Controller
         PengaduanHistori::create([
             'pengaduan_id' => $pengaduan->id,
             'status' => 'baru',
-            'keterangan' => 'Pengaduan berhasil dikirim oleh konsumen',
+            'keterangan' => $this->getKeteranganStatus('baru'),
             'updated_by' => auth()->id(),
         ]);
 
@@ -110,18 +118,13 @@ class PengaduanController extends Controller
 
     private function getKeteranganStatus($status)
     {
-        if ($status == 'baru') {
-            return 'Pengaduan baru masuk ke sistem';
-        } elseif ($status == 'diproses') {
-            return 'Pengaduan sedang diproses oleh admin';
-        } elseif ($status == 'diteruskan_lapangan') {
-            return 'Pengaduan diteruskan ke bagian lapangan';
-        } elseif ($status == 'dikerjakan') {
-            return 'Petugas lapangan sedang mengerjakan perbaikan';
-        } elseif ($status == 'selesai') {
-            return 'Pengaduan selesai dikerjakan';
-        }
-
-        return 'Status pengaduan diperbarui';
+        return match ($status) {
+            'baru' => 'Pengaduan berhasil dikirim oleh konsumen dan sedang menunggu diterima oleh admin.',
+            'diproses' => 'Pengaduan sudah diterima oleh admin. Admin sedang memeriksa keluhan dan menyiapkan tindak lanjut.',
+            'diteruskan_lapangan' => 'Pengaduan sudah diteruskan oleh admin ke bagian lapangan untuk dilakukan pengecekan dan penanganan.',
+            'dikerjakan' => 'Petugas lapangan sedang mengerjakan perbaikan sesuai pengaduan yang masuk.',
+            'selesai' => 'Perbaikan sudah selesai dikerjakan. Konsumen dapat melihat hasil penanganan dan foto bukti perbaikan jika tersedia.',
+            default => 'Status pengaduan diperbarui.',
+        };
     }
 }

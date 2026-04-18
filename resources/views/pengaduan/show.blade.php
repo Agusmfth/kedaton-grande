@@ -71,7 +71,21 @@
                     <i class="fas fa-check bg-success"></i>
                     <div class="timeline-item">
                         <h3 class="timeline-header">
-                            <strong>{{ $item->status }}</strong>
+                            <strong>
+                                @if($item->status == 'baru')
+                                    Pengaduan Dikirim
+                                @elseif($item->status == 'diproses')
+                                    Diterima Admin
+                                @elseif($item->status == 'diteruskan_lapangan')
+                                    Diteruskan ke Lapangan
+                                @elseif($item->status == 'dikerjakan')
+                                    Sedang Dikerjakan
+                                @elseif($item->status == 'selesai')
+                                    Selesai
+                                @else
+                                    {{ $item->status }}
+                                @endif
+                            </strong>
                         </h3>
                         <div class="timeline-body">
                             {{ $item->keterangan }}

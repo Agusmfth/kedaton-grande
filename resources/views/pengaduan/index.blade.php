@@ -40,6 +40,33 @@
     </div>
     @endif
 
+    @if(!empty($status))
+    <div class="alert alert-info d-flex justify-content-between align-items-center">
+        <span>
+            <i class="fas fa-filter mr-1"></i>
+            Menampilkan pengaduan dengan status:
+            <strong>
+                @if($status == 'baru')
+                    Baru
+                @elseif($status == 'diproses')
+                    Diproses Admin
+                @elseif($status == 'diteruskan_lapangan')
+                    Diteruskan ke Lapangan
+                @elseif($status == 'dikerjakan')
+                    Dikerjakan
+                @elseif($status == 'selesai')
+                    Selesai
+                @else
+                    {{ $status }}
+                @endif
+            </strong>
+        </span>
+        <a href="{{ route('pengaduan.index') }}" class="btn btn-sm btn-outline-primary">
+            Tampilkan Semua
+        </a>
+    </div>
+    @endif
+
     <div class="row">
         <div class="col-md-4">
             <div class="small-box bg-info">

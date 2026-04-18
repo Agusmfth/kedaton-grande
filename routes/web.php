@@ -1,8 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PengaduanController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SerahTerimaKunciController;
+use App\Http\Controllers\KonsumenDashboardController;
+use App\Http\Controllers\LaporanController;
+use App\Models\Pengaduan;
+use App\Models\SerahTerimaKunci;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,40 +19,81 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-/* Dashboard */
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+require __DIR__.'/auth.php';
 
-/* Pengaduan Konsumen */
-Route::middleware('auth')->group(function () {
 
-    // TAMPIL DATA
+/*
+|--------------------------------------------------------------------------
+| ADMIN AREA
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+
+    /* ================= DASHBOARD ADMIN ================= */
+    Route::get('/dashboard', function () {
+        if (auth()->user()->role === 'konsumen') {
+            return redirect()->route('konsumen.dashboard');
+        }
+
+        $jumlahSerahTerima = SerahTerimaKunci::count();
+        $jumlahPengaduan = Pengaduan::count();
+        $jumlahTugasPerbaikan = Pengaduan::whereIn('status', [
+            'diteruskan_lapangan',
+            'dikerjakan',
+        ])->count();
+        $jumlahLaporan = Pengaduan::where('status', 'selesai')->count();
+
+        return view('dashboard', compact(
+            'jumlahSerahTerima',
+            'jumlahPengaduan',
+            'jumlahTugasPerbaikan',
+            'jumlahLaporan'
+        ));
+    })->name('dashboard');
+
+
+    /* ================= PENGADUAN ================= */
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
-    
-    // STATUS PERBAIKAN
-    Route::get('/status-perbaikan', [PengaduanController::class, 'index'])->name('status.index');
-
-    // FORM TAMBAH
     Route::get('/pengaduan/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
-
-    // SIMPAN DATA
     Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
-    // FORM EDIT (update status)
     Route::get('/pengaduan/{id}', [PengaduanController::class, 'show'])->name('pengaduan.show');
     Route::get('/pengaduan/{id}/edit', [PengaduanController::class, 'edit'])->name('pengaduan.edit');
-
-    // UPDATE STATUS
     Route::put('/pengaduan/{id}', [PengaduanController::class, 'update'])->name('pengaduan.update');
-
-    // DELETE (opsional)
     Route::delete('/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
 
-    /* Profile */
+    /* STATUS PERBAIKAN */
+    Route::get('/status-perbaikan', [PengaduanController::class, 'index'])->name('status.index');
+
+
+    /* ================= SERAH TERIMA KUNCI ================= */
+    Route::get('/serah-terima', [SerahTerimaKunciController::class, 'index'])->name('serah-terima.index');
+    Route::get('/serah-terima/create', [SerahTerimaKunciController::class, 'create'])->name('serah-terima.create');
+    Route::post('/serah-terima', [SerahTerimaKunciController::class, 'store'])->name('serah-terima.store');
+    Route::get('/serah-terima/{id}/edit', [SerahTerimaKunciController::class, 'edit'])->name('serah-terima.edit');
+    Route::put('/serah-terima/{id}', [SerahTerimaKunciController::class, 'update'])->name('serah-terima.update');
+    Route::delete('/serah-terima/{id}', [SerahTerimaKunciController::class, 'destroy'])->name('serah-terima.destroy');
+
+    /* ================= LAPORAN ================= */
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+
+    /* ================= PROFILE ================= */
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
-require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| KONSUMEN AREA
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/konsumen/dashboard', [KonsumenDashboardController::class, 'index'])
+        ->name('konsumen.dashboard');
+
+});
