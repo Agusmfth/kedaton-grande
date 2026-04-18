@@ -1,324 +1,451 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Kedaton Grande</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <style>
+        :root {
+            --estate-green: #0f766e;
+            --estate-teal: #14b8a6;
+            --estate-gold: #d6a84f;
+            --estate-ink: #172033;
+            --estate-muted: #64748b;
+            --estate-line: #e6ebf2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
+            background:
+                linear-gradient(rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.38)),
+                url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1800&q=80');
+            background-position: center;
+            background-size: cover;
+            color: var(--estate-ink);
+            font-family: "Segoe UI", Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:
-                radial-gradient(circle at top left, rgba(13, 110, 253, 0.10), transparent 30%),
-                radial-gradient(circle at bottom right, rgba(25, 135, 84, 0.08), transparent 28%),
-                linear-gradient(135deg, #f8fbff, #eef4f8);
         }
 
-        .login-section {
+        .login-page {
+            align-items: center;
+            display: flex;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 15px;
+            padding: 28px;
         }
 
-        .login-card {
-            width: 100%;
-            max-width: 1050px;
-            border: none;
-            border-radius: 24px;
+        .login-shell {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            border-radius: 8px;
+            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.28);
+            margin: 0 auto;
+            max-width: 1120px;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 20px 45px rgba(31, 41, 55, 0.12);
+            width: 100%;
         }
 
-        .left-panel {
-            background: linear-gradient(180deg, #f4f8fd, #eaf2fb);
-            padding: 48px 42px;
-            position: relative;
-            height: 100%;
-        }
-
-        .left-panel::before {
-            content: '';
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: rgba(13, 110, 253, 0.08);
-            top: -40px;
-            right: -40px;
-        }
-
-        .left-panel::after {
-            content: '';
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            border-radius: 24px;
-            background: rgba(13, 110, 253, 0.06);
-            bottom: 30px;
-            left: -30px;
-            transform: rotate(20deg);
-        }
-
-        .brand-badge {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #4f8dfd, #76a9fa);
+        .brand-panel {
+            background:
+                linear-gradient(135deg, rgba(15, 118, 110, 0.94), rgba(23, 32, 51, 0.92)),
+                url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80');
+            background-position: center;
+            background-size: cover;
             color: #fff;
+            min-height: 640px;
+            padding: 42px;
+            position: relative;
+        }
+
+        .brand-panel::after {
+            background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.42));
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .brand-content {
             display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo {
             align-items: center;
+            display: flex;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            align-items: center;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 8px;
+            display: flex;
+            font-size: 18px;
+            font-weight: 800;
+            height: 46px;
             justify-content: center;
-            font-weight: 700;
+            width: 46px;
+        }
+
+        .brand-name {
             font-size: 22px;
-            margin-bottom: 24px;
-            box-shadow: 0 12px 25px rgba(79, 141, 253, 0.28);
-            position: relative;
-            z-index: 1;
+            font-weight: 800;
+            line-height: 1.1;
         }
 
-        .system-label {
-            display: inline-block;
-            background: #dbeafe;
-            color: #1d4ed8;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 8px 14px;
+        .brand-subtitle {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 13px;
+            margin-top: 2px;
+        }
+
+        .brand-copy {
+            max-width: 520px;
+        }
+
+        .brand-copy span {
+            background: rgba(214, 168, 79, 0.18);
+            border: 1px solid rgba(214, 168, 79, 0.38);
             border-radius: 999px;
+            color: #ffe6a6;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 800;
             margin-bottom: 18px;
-            position: relative;
-            z-index: 1;
+            padding: 8px 14px;
         }
 
-        .left-panel h2 {
-            color: #1f2937;
-            font-weight: 700;
-            line-height: 1.3;
-            font-size: 30px;
-            position: relative;
-            z-index: 1;
+        .brand-copy h1 {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.22;
+            margin-bottom: 16px;
         }
 
-        .left-panel p {
-            color: #4b5563;
+        .brand-copy p {
+            color: rgba(255, 255, 255, 0.82);
             font-size: 15px;
             line-height: 1.8;
-            margin-top: 18px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 0;
         }
 
-        .feature-box {
-            margin-top: 28px;
+        .feature-grid {
             display: grid;
-            gap: 14px;
-            position: relative;
-            z-index: 1;
+            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 30px;
         }
 
-        .feature-item {
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid #e5edf6;
-            border-radius: 16px;
-            padding: 14px 16px;
-            color: #334155;
+        .feature-card {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        .feature-card i {
+            color: #ffe6a6;
+            margin-bottom: 10px;
+        }
+
+        .feature-card strong {
+            display: block;
             font-size: 14px;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+            margin-bottom: 4px;
         }
 
-        .right-panel {
-            padding: 48px 42px;
-            background: rgba(255, 255, 255, 0.88);
+        .feature-card small {
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .form-panel {
+            align-items: center;
+            background: #fff;
+            display: flex;
+            min-height: 640px;
+            padding: 42px;
+        }
+
+        .form-wrap {
+            margin: 0 auto;
+            max-width: 430px;
+            width: 100%;
+        }
+
+        .form-kicker {
+            color: var(--estate-green);
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .form-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1f2937;
+            color: var(--estate-ink);
+            font-size: 30px;
+            font-weight: 800;
             margin-bottom: 8px;
         }
 
         .form-subtitle {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 30px;
+            color: var(--estate-muted);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 28px;
         }
 
         .form-label {
-            font-weight: 600;
-            color: #374151;
+            color: #344054;
+            font-size: 14px;
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
+        .input-group-text {
+            background: #f8fafc;
+            border-color: var(--estate-line);
+            border-radius: 8px 0 0 8px;
+            color: var(--estate-muted);
+            width: 46px;
+        }
+
         .form-control {
-            border-radius: 14px;
-            padding: 13px 15px;
-            border: 1px solid #d9e2ec;
-            background: #fdfefe;
-            box-shadow: none;
+            border-color: var(--estate-line);
+            border-radius: 0 8px 8px 0;
+            min-height: 48px;
         }
 
         .form-control:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.18rem rgba(13, 110, 253, 0.12);
+            border-color: var(--estate-teal);
+            box-shadow: 0 0 0 0.18rem rgba(20, 184, 166, 0.14);
         }
 
-        .form-check-label,
-        .helper-link,
-        .footer-text {
-            font-size: 14px;
+        .form-check-input:checked {
+            background-color: var(--estate-green);
+            border-color: var(--estate-green);
         }
 
         .helper-link {
-            color: #3b82f6;
+            color: var(--estate-green);
+            font-size: 14px;
+            font-weight: 700;
             text-decoration: none;
         }
 
         .helper-link:hover {
+            color: #0b5f59;
             text-decoration: underline;
         }
 
         .btn-login {
-            background: linear-gradient(135deg, #4f8dfd, #3b82f6);
-            border: none;
-            border-radius: 14px;
-            padding: 13px;
-            font-weight: 600;
-            font-size: 15px;
-            box-shadow: 0 12px 22px rgba(59, 130, 246, 0.22);
+            background: linear-gradient(135deg, var(--estate-green), var(--estate-teal));
+            border: 0;
+            border-radius: 8px;
+            box-shadow: 0 14px 28px rgba(20, 184, 166, 0.24);
+            font-weight: 800;
+            min-height: 48px;
         }
 
         .btn-login:hover {
-            background: linear-gradient(135deg, #3d7ef7, #2563eb);
+            background: linear-gradient(135deg, #0b5f59, #0d9488);
+        }
+
+        .login-note {
+            background: #f8fafc;
+            border: 1px solid var(--estate-line);
+            border-radius: 8px;
+            color: var(--estate-muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 22px;
+            padding: 14px;
         }
 
         .footer-text {
             color: #94a3b8;
+            font-size: 13px;
+            margin-top: 24px;
+            text-align: center;
         }
 
-        @media (max-width: 767px) {
-            .left-panel,
-            .right-panel {
-                padding: 32px 24px;
+        @media (max-width: 991px) {
+            .brand-panel,
+            .form-panel {
+                min-height: auto;
             }
 
-            .left-panel h2 {
-                font-size: 24px;
+            .brand-panel {
+                padding: 32px;
             }
 
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .login-page {
+                padding: 14px;
+            }
+
+            .brand-panel,
+            .form-panel {
+                padding: 26px 22px;
+            }
+
+            .brand-copy h1,
             .form-title {
-                font-size: 24px;
+                font-size: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <section class="login-section">
-        <div class="login-card">
+    <main class="login-page">
+        <div class="login-shell">
             <div class="row g-0">
-                <div class="col-md-6">
-                    <div class="left-panel">
-                        <div class="brand-badge">KG</div>
-                        <span class="system-label">Sistem Informasi Pelayanan</span>
-                        <h2>
-                            Kedaton Grande<br>
-                            Layanan Serah Terima Kunci & Pengaduan Konsumen
-                        </h2>
-                        <p>
-                            Aplikasi ini membantu proses pengelolaan serah terima kunci rumah,
-                            pencatatan pengaduan konsumen, tindak lanjut perbaikan, dan penyajian
-                            laporan secara lebih tertata, cepat, dan profesional.
-                        </p>
+                <div class="col-lg-6">
+                    <section class="brand-panel">
+                        <div class="brand-content">
+                            <div class="brand-logo">
+                                <div class="brand-mark">KG</div>
+                                <div>
+                                    <div class="brand-name">Kedaton Grande</div>
+                                    <div class="brand-subtitle">Residential Service Portal</div>
+                                </div>
+                            </div>
 
-                        <div class="feature-box">
-                            <div class="feature-item">Pengelolaan data serah terima kunci yang lebih rapi</div>
-                            <div class="feature-item">Pencatatan pengaduan konsumen secara terstruktur</div>
-                            <div class="feature-item">Monitoring progres perbaikan dan pelaporan</div>
+                            <div class="brand-copy">
+                                <span>Perumahan Kedaton Grande</span>
+                                <h1>Layanan penghuni yang tertata, cepat, dan transparan.</h1>
+                                <p>Kelola serah terima kunci, pantau pengaduan pasca-serah-terima, dan ikuti proses perbaikan dari satu sistem terpadu.</p>
+
+                                <div class="feature-grid">
+                                    <div class="feature-card">
+                                        <i class="fas fa-key"></i>
+                                        <strong>Serah Terima</strong>
+                                        <small>Data konsumen dan unit rumah lebih rapi.</small>
+                                    </div>
+                                    <div class="feature-card">
+                                        <i class="fas fa-comments"></i>
+                                        <strong>Pengaduan</strong>
+                                        <small>Keluhan tercatat dan mudah dipantau.</small>
+                                    </div>
+                                    <div class="feature-card">
+                                        <i class="fas fa-tools"></i>
+                                        <strong>Perbaikan</strong>
+                                        <small>Progres lapangan tampil jelas.</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="right-panel">
-                        <h3 class="form-title">Selamat Datang</h3>
-                        <div class="form-subtitle">
-                            Silakan masuk menggunakan akun Anda untuk mengakses sistem.
-                        </div>
+                <div class="col-lg-6">
+                    <section class="form-panel">
+                        <div class="form-wrap">
+                            <div class="form-kicker">Akses Sistem</div>
+                            <h2 class="form-title">Masuk ke Akun</h2>
+                            <p class="form-subtitle">Gunakan akun yang telah diberikan oleh pengelola Kedaton Grande untuk mengakses layanan.</p>
 
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                            @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
 
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
 
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value="{{ old('email') }}"
-                                    class="form-control @error('email') is-invalid @enderror"
-                                    placeholder="Masukkan email"
-                                    required
-                                    autofocus
-                                >
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    class="form-control @error('password') is-invalid @enderror"
-                                    placeholder="Masukkan password"
-                                    required
-                                >
-                                @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember_me">
-                                    <label class="form-check-label" for="remember_me">
-                                        Ingat saya
-                                    </label>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value="{{ old('email') }}"
+                                            class="form-control @error('email') is-invalid @enderror"
+                                            placeholder="nama@email.com"
+                                            required
+                                            autofocus
+                                        >
+                                        @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
 
-                                @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}" class="helper-link">
-                                        Lupa password?
-                                    </a>
-                                @endif
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            class="form-control @error('password') is-invalid @enderror"
+                                            placeholder="Masukkan password"
+                                            required
+                                        >
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember_me">
+                                        <label class="form-check-label" for="remember_me">
+                                            Ingat saya
+                                        </label>
+                                    </div>
+
+                                    @if (Route::has('password.request'))
+                                        <a href="{{ route('password.request') }}" class="helper-link">
+                                            Lupa password?
+                                        </a>
+                                    @endif
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-login">
+                                        Masuk ke Sistem
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="login-note">
+                                <strong>Informasi akses:</strong> akun admin, petugas lapangan, pimpinan, dan konsumen dikelola oleh pengelola perumahan.
                             </div>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-login">
-                                    Login ke Sistem
-                                </button>
+                            <div class="footer-text">
+                                &copy; {{ date('Y') }} Kedaton Grande. All rights reserved.
                             </div>
-                        </form>
-
-                        <div class="text-center mt-4 footer-text">
-                            &copy; {{ date('Y') }} Kedaton Grande
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

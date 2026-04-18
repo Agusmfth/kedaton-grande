@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\SerahTerimaKunci;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class SerahTerimaKunciController extends Controller
 {
@@ -22,7 +23,7 @@ class SerahTerimaKunciController extends Controller
 
    public function store(Request $request)
 {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
         'username' => 'required|string|max:255|unique:users,username',
         'email' => 'required|email|unique:users,email',
@@ -31,6 +32,13 @@ class SerahTerimaKunciController extends Controller
         'tanggal_serah_terima' => 'required|date',
         'keterangan' => 'nullable|string',
     ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('create_modal', true);
+    }
 
     $user = User::create([
         'name' => $request->name,
@@ -61,7 +69,7 @@ class SerahTerimaKunciController extends Controller
     {
         $item = SerahTerimaKunci::with('user')->findOrFail($id);
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $item->user->id,
             'password' => 'nullable|string|min:6',
@@ -69,6 +77,13 @@ class SerahTerimaKunciController extends Controller
             'tanggal_serah_terima' => 'required|date',
             'keterangan' => 'nullable|string',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('edit_id', $id);
+        }
 
         $item->user->update([
             'name' => $request->name,

@@ -42,12 +42,24 @@ Route::middleware(['auth'])->group(function () {
             'dikerjakan',
         ])->count();
         $jumlahLaporan = Pengaduan::where('status', 'selesai')->count();
+        $statusPengaduan = [
+            'baru' => Pengaduan::where('status', 'baru')->count(),
+            'diproses' => Pengaduan::where('status', 'diproses')->count(),
+            'diteruskan_lapangan' => Pengaduan::where('status', 'diteruskan_lapangan')->count(),
+            'dikerjakan' => Pengaduan::where('status', 'dikerjakan')->count(),
+            'selesai' => Pengaduan::where('status', 'selesai')->count(),
+        ];
+        $pengaduanTerbaru = Pengaduan::with('user')->latest()->take(5)->get();
+        $serahTerimaTerbaru = SerahTerimaKunci::with('user')->latest()->take(5)->get();
 
         return view('dashboard', compact(
             'jumlahSerahTerima',
             'jumlahPengaduan',
             'jumlahTugasPerbaikan',
-            'jumlahLaporan'
+            'jumlahLaporan',
+            'statusPengaduan',
+            'pengaduanTerbaru',
+            'serahTerimaTerbaru'
         ));
     })->name('dashboard');
 

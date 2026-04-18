@@ -21,6 +21,10 @@
         <form action="{{ route('pengaduan.store') }}" method="POST">
             @csrf
             <div class="card-body">
+                <div class="alert alert-info">
+                    Jelaskan keluhan dengan singkat dan jelas agar admin lebih cepat menindaklanjuti.
+                </div>
+
                 <div class="form-group">
                     <label>Judul Pengaduan</label>
                     <input

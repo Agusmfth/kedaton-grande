@@ -23,42 +23,58 @@
             @method('PUT')
 
             <div class="card-body">
-                <div class="form-group">
-                    <label>Judul Pengaduan</label>
-                    <input type="text" class="form-control" value="{{ $pengaduan->judul }}" readonly>
+                <div class="alert alert-info">
+                    Perbarui status pekerjaan dan unggah foto bukti jika perbaikan sudah selesai.
                 </div>
 
-                <div class="form-group">
-                    <label>Keluhan</label>
-                    <textarea class="form-control" rows="4" readonly>{{ $pengaduan->keluhan }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="status" class="form-control @error('status') is-invalid @enderror" required>
-                        <option value="dikerjakan" {{ $pengaduan->status == 'dikerjakan' ? 'selected' : '' }}>Dikerjakan</option>
-                        <option value="selesai">Selesai</option>
-                    </select>
-                    @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Upload Foto Bukti Perbaikan</label>
-                    <input type="file" name="foto_perbaikan" class="form-control @error('foto_perbaikan') is-invalid @enderror" accept=".jpg,.jpeg,.png">
-                    <small class="text-muted">Format: JPG, JPEG, PNG. Maksimal 2 MB.</small>
-                    @error('foto_perbaikan')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                @if($pengaduan->foto_perbaikan)
-                    <div class="form-group">
-                        <label>Foto Saat Ini</label><br>
-                        <img src="{{ asset('storage/' . $pengaduan->foto_perbaikan) }}" alt="Foto Perbaikan" class="img-fluid rounded" style="max-width: 300px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Judul Pengaduan</label>
+                            <input type="text" class="form-control" value="{{ $pengaduan->judul }}" readonly>
+                        </div>
                     </div>
-                @endif
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+                                <option value="dikerjakan" {{ $pengaduan->status == 'dikerjakan' ? 'selected' : '' }}>Dikerjakan</option>
+                                <option value="selesai">Selesai</option>
+                            </select>
+                            @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Keluhan</label>
+                            <textarea class="form-control" rows="4" readonly>{{ $pengaduan->keluhan }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group mb-md-0">
+                            <label>Upload Foto Bukti Perbaikan</label>
+                            <input type="file" name="foto_perbaikan" class="form-control @error('foto_perbaikan') is-invalid @enderror" accept=".jpg,.jpeg,.png">
+                            <small class="text-muted">Format: JPG, JPEG, PNG. Maksimal 2 MB.</small>
+                            @error('foto_perbaikan')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    @if($pengaduan->foto_perbaikan)
+                    <div class="col-md-6">
+                        <div class="form-group mb-0">
+                            <label>Foto Saat Ini</label><br>
+                            <img src="{{ asset('storage/' . $pengaduan->foto_perbaikan) }}" alt="Foto Perbaikan" class="img-fluid rounded shadow-sm" style="max-width: 300px;">
+                        </div>
+                    </div>
+                    @endif
+                </div>
             </div>
 
             <div class="card-footer">

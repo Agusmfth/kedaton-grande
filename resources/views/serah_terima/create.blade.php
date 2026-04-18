@@ -23,77 +23,89 @@
             @csrf
 
             <div class="card-body">
-
-                {{-- NAMA --}}
-                <div class="form-group">
-                    <label>Nama Konsumen</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                        value="{{ old('name') }}" required>
-                    @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                <div class="alert alert-info">
+                    Data serah terima akan membuat akun konsumen baru secara otomatis.
                 </div>
 
-                {{-- USERNAME LOGIN --}}
-                <div class="form-group">
-                    <label>Username Login</label>
-                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                        value="{{ old('username') }}" required>
-                    @error('username')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nama Konsumen</label>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                value="{{ old('name') }}" required>
+                            @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}" required>
-                    @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                
-                {{-- PASSWORD --}}
-                <div class="form-group">
-                    <label>Password Login</label>
-                    <input type="text" name="password" class="form-control @error('password') is-invalid @enderror"
-                        required>
-                    @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Username Login</label>
+                            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                                value="{{ old('username') }}" required>
+                            @error('username')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
 
-                {{-- BLOK --}}
-                <div class="form-group">
-                    <label>Blok Rumah</label>
-                    <input type="text" name="blok" class="form-control @error('blok') is-invalid @enderror"
-                        value="{{ old('blok') }}" required>
-                    @error('blok')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                value="{{ old('email') }}" required>
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
 
-                {{-- TANGGAL --}}
-                <div class="form-group">
-                    <label>Tanggal Serah Terima</label>
-                    <input type="date" name="tanggal_serah_terima"
-                        class="form-control @error('tanggal_serah_terima') is-invalid @enderror"
-                        value="{{ old('tanggal_serah_terima') }}" required>
-                    @error('tanggal_serah_terima')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Password Login</label>
+                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                                required>
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
 
-                {{-- KETERANGAN --}}
-                <div class="form-group">
-                    <label>Keterangan</label>
-                    <textarea name="keterangan"
-                        class="form-control @error('keterangan') is-invalid @enderror">{{ old('keterangan') }}</textarea>
-                    @error('keterangan')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Blok Rumah</label>
+                            <input type="text" name="blok" class="form-control @error('blok') is-invalid @enderror"
+                                value="{{ old('blok') }}" required>
+                            @error('blok')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tanggal Serah Terima</label>
+                            <input type="date" name="tanggal_serah_terima"
+                                class="form-control @error('tanggal_serah_terima') is-invalid @enderror"
+                                value="{{ old('tanggal_serah_terima') }}" required>
+                            @error('tanggal_serah_terima')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Keterangan</label>
+                            <textarea name="keterangan" rows="3"
+                                class="form-control @error('keterangan') is-invalid @enderror">{{ old('keterangan') }}</textarea>
+                            @error('keterangan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="card-footer">

@@ -9,12 +9,286 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <style>
+        :root {
+            --kg-bg: #f6f7fb;
+            --kg-surface: #ffffff;
+            --kg-text: #1f2937;
+            --kg-muted: #64748b;
+            --kg-border: #e7ebf3;
+            --kg-teal: #14b8a6;
+            --kg-violet: #7c3aed;
+            --kg-rose: #f43f5e;
+            --kg-gold: #f59e0b;
+        }
+
+        body {
+            background: var(--kg-bg);
+            color: var(--kg-text);
+            font-family: "Source Sans Pro", Arial, sans-serif;
+        }
+
+        .content-wrapper {
+            background: var(--kg-bg);
+        }
+
+        .main-header {
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid var(--kg-border);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        }
+
+        .main-header .nav-link {
+            color: var(--kg-muted);
+        }
+
+        .top-user-name {
+            color: var(--kg-text);
+            font-weight: 700;
+        }
+
+        .main-sidebar {
+            background: #ffffff;
+            border-right: 1px solid var(--kg-border);
+            box-shadow: 10px 0 30px rgba(15, 23, 42, 0.05);
+        }
+
+        .brand-link {
+            border-bottom: 1px solid var(--kg-border);
+            padding: 18px 16px;
+        }
+
+        .brand-link .brand-text {
+            color: var(--kg-text);
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            align-items: center;
+            background: linear-gradient(135deg, var(--kg-teal), var(--kg-violet));
+            border-radius: 8px;
+            color: #fff;
+            display: inline-flex;
+            font-size: 14px;
+            font-weight: 800;
+            height: 34px;
+            justify-content: center;
+            margin-right: 10px;
+            width: 34px;
+        }
+
+        .user-panel {
+            background: #f8fafc;
+            border: 1px solid var(--kg-border);
+            border-radius: 8px;
+            margin: 16px 10px 14px;
+            padding: 14px;
+        }
+
+        .user-panel .info {
+            padding: 0;
+        }
+
+        .user-panel .d-block {
+            color: var(--kg-text);
+            font-weight: 700;
+        }
+
+        .role-badge {
+            background: #ecfeff;
+            border-radius: 6px;
+            color: #0f766e;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 6px;
+            padding: 4px 8px;
+        }
+
+        .nav-sidebar {
+            padding: 0 10px;
+        }
+
+        .nav-sidebar .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-sidebar .nav-link {
+            border-radius: 8px;
+            color: #667085;
+            font-weight: 600;
+            padding: 12px 13px;
+        }
+
+        .nav-sidebar .nav-link .nav-icon {
+            color: #94a3b8;
+            margin-right: 8px;
+            width: 22px;
+        }
+
+        .nav-sidebar .nav-link:hover {
+            background: #f1f5f9;
+            color: var(--kg-text);
+        }
+
+        .nav-sidebar .nav-link.active {
+            background: linear-gradient(135deg, var(--kg-teal), var(--kg-violet));
+            box-shadow: 0 10px 20px rgba(20, 184, 166, 0.22);
+            color: #fff;
+        }
+
+        .nav-sidebar .nav-link.active .nav-icon {
+            color: #fff;
+        }
+
+        .content-header {
+            padding: 18px 0 6px;
+        }
+
+        .content-header h4 {
+            color: var(--kg-text);
+        }
+
+        .card,
+        .modal-content,
+        .alert {
+            border-radius: 8px;
+        }
+
+        .card {
+            border: 1px solid var(--kg-border);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+        }
+
+        .card-header {
+            background: var(--kg-surface);
+            border-bottom: 1px solid var(--kg-border);
+            padding: 16px 18px;
+        }
+
+        .card-title {
+            color: var(--kg-text);
+            font-weight: 700;
+        }
+
+        .card-footer {
+            background: #fbfcfe;
+            border-top: 1px solid var(--kg-border);
+        }
+
+        .form-group label {
+            color: #344054;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-control {
+            border: 1px solid #d9e1ec;
+            border-radius: 8px;
+            min-height: 42px;
+        }
+
+        textarea.form-control {
+            min-height: auto;
+        }
+
+        .form-control:focus {
+            border-color: var(--kg-teal);
+            box-shadow: 0 0 0 0.16rem rgba(20, 184, 166, 0.15);
+        }
+
+        .form-control[readonly] {
+            background: #f8fafc;
+            color: #475569;
+        }
+
+        .btn {
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--kg-teal), var(--kg-violet));
+            border: 0;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0f766e, #6d28d9);
+        }
+
+        .btn-warning {
+            background: var(--kg-gold);
+            border-color: var(--kg-gold);
+            color: #111827;
+        }
+
+        .btn-danger {
+            background: var(--kg-rose);
+            border-color: var(--kg-rose);
+        }
+
+        .btn-secondary,
+        .btn-outline-secondary {
+            border-color: #cbd5e1;
+        }
+
+        .table {
+            color: #344054;
+        }
+
+        .table thead th {
+            background: #f8fafc;
+            border-bottom: 1px solid var(--kg-border);
+            color: #475569;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .table-bordered,
+        .table-bordered td,
+        .table-bordered th {
+            border-color: var(--kg-border);
+        }
+
+        .table-hover tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--kg-border);
+        }
+
+        .modal-header.bg-primary,
+        .modal-header.bg-warning {
+            background: linear-gradient(135deg, var(--kg-teal), var(--kg-violet)) !important;
+            color: #fff;
+        }
+
+        .modal-header .close {
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .main-footer {
+            background: #fff;
+            border-top: 1px solid var(--kg-border);
+            color: var(--kg-muted);
+        }
+
+        @media (max-width: 767px) {
+            .quick-actions .btn,
+            .content-header .btn {
+                margin-top: 8px;
+            }
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button">
@@ -25,7 +299,7 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <span class="nav-link">{{ auth()->user()->name ?? 'User' }}</span>
+                    <span class="nav-link top-user-name">{{ auth()->user()->name ?? 'User' }}</span>
                 </li>
                 <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}" class="d-inline">
@@ -36,16 +310,17 @@
             </ul>
         </nav>
 
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar">
             <a href="{{ route('dashboard') }}" class="brand-link">
-                <span class="brand-text font-weight-light ml-2">Kedaton Grande</span>
+                <span class="brand-mark">KG</span>
+                <span class="brand-text">Kedaton Grande</span>
             </a>
 
             <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="user-panel">
                     <div class="info">
                         <a href="#" class="d-block">{{ auth()->user()->name ?? 'User' }}</a>
-                        <small class="text-light">
+                        <small class="role-badge">
                             @if(auth()->user()->role == 'admin')
                                 Admin
                             @elseif(auth()->user()->role == 'konsumen')
@@ -88,7 +363,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->is('tugas-perbaikan*') ? 'active' : '' }}">
+                            <a href="{{ route('pengaduan.index', ['status' => 'diteruskan_lapangan']) }}" class="nav-link {{ request()->fullUrlIs(route('pengaduan.index', ['status' => 'diteruskan_lapangan'])) ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tools"></i>
                                 <p>Tugas Perbaikan</p>
                             </a>
