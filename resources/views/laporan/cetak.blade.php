@@ -154,9 +154,11 @@
         <thead>
             <tr>
                 <th width="40">No</th>
-                <th>Nama Konsumen</th>
+                <th>Diajukan Oleh</th>
                 <th>Judul</th>
                 <th>Keluhan</th>
+                <th>Foto Kerusakan</th>
+                <th>Dikerjakan Oleh</th>
                 <th>Status</th>
                 <th>Tanggal</th>
             </tr>
@@ -168,6 +170,8 @@
                 <td>{{ $item->user->name ?? '-' }}</td>
                 <td>{{ $item->judul }}</td>
                 <td>{{ $item->keluhan }}</td>
+                <td class="text-center">{{ $item->foto_pengaduan ? 'Ada' : '-' }}</td>
+                <td>{{ $item->petugas->name ?? '-' }}</td>
                 <td class="text-center">
                     @if($item->status == 'baru')
                         Baru
@@ -185,7 +189,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="text-center">Belum ada data pengaduan.</td>
+                <td colspan="8" class="text-center">Belum ada data pengaduan.</td>
             </tr>
             @endforelse
         </tbody>

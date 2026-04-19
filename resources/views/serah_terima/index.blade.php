@@ -28,6 +28,7 @@
         </div>
 
         <div class="card-body table-responsive">
+            @if($data->count() > 0)
             <table class="table table-bordered table-hover kg-datatable">
                 <thead class="text-center">
                     <tr>
@@ -41,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($data as $item)
+                    @foreach($data as $item)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item->user->name ?? '-' }}</td>
@@ -63,15 +64,15 @@
                                 </form>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">
-                                Belum ada data serah terima kunci.
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-inbox fa-2x mb-2"></i>
+                <div>Belum ada data serah terima kunci.</div>
+            </div>
+            @endif
         </div>
     </div>
 

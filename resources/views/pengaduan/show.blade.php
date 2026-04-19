@@ -263,6 +263,24 @@
         margin-bottom: 0;
     }
 
+    .timeline-actor {
+        align-items: center;
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+        border-radius: 8px;
+        color: #475569;
+        display: inline-flex;
+        font-size: 13px;
+        font-weight: 700;
+        margin-top: 12px;
+        padding: 7px 10px;
+    }
+
+    .timeline-actor i {
+        color: #0f766e;
+        margin-right: 7px;
+    }
+
     .evidence-image {
         border-radius: 8px;
         box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
@@ -347,6 +365,10 @@
                             <div class="info-label">Tanggal Pengaduan</div>
                             <div class="info-value">{{ \Carbon\Carbon::parse($pengaduan->tanggal_pengaduan)->format('d M Y') }}</div>
                         </div>
+                        <div class="info-box compact full">
+                            <div class="info-label">Petugas Lapangan</div>
+                            <div class="info-value">{{ $pengaduan->petugas->name ?? 'Belum ditugaskan' }}</div>
+                        </div>
                         <div class="info-box full">
                             <div class="info-label">Judul Pengaduan</div>
                             <div class="info-value">{{ $pengaduan->judul }}</div>
@@ -356,6 +378,26 @@
                             <div class="info-value long-text">{{ $pengaduan->keluhan }}</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="lux-card">
+                <div class="lux-card-header">
+                    <h3 class="lux-card-title">
+                        <i class="fas fa-camera mr-1"></i> Foto Kerusakan
+                    </h3>
+                </div>
+                <div class="lux-card-body">
+                    @if($pengaduan->foto_pengaduan)
+                        <img src="{{ asset('storage/' . $pengaduan->foto_pengaduan) }}" alt="Foto Kerusakan" class="evidence-image">
+                    @else
+                        <div class="empty-evidence">
+                            <div>
+                                <i class="fas fa-camera fa-2x mb-2"></i>
+                                <div>Belum ada foto kerusakan yang diunggah oleh konsumen.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -411,6 +453,10 @@
                                             </span>
                                         </div>
                                         <p>{{ $item->keterangan }}</p>
+                                        <div class="timeline-actor">
+                                            <i class="fas fa-user-check"></i>
+                                            Dilakukan oleh: {{ $item->updater->name ?? 'Sistem' }}
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach

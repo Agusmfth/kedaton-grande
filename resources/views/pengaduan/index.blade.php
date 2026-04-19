@@ -126,14 +126,18 @@
                             <th style="width: 60px;">No</th>
 
                             @if(auth()->user()->role != 'konsumen')
-                            <th>Nama Konsumen</th>
+                            <th>Diajukan Oleh</th>
                             @endif
 
                             <th>Judul Pengaduan</th>
                             <th>Keluhan</th>
+                            <th style="width: 130px;">Foto Kerusakan</th>
+                            @if(auth()->user()->role != 'konsumen')
+                            <th>Dikerjakan Oleh</th>
+                            @endif
                             <th style="width: 180px;">Status</th>
                             <th style="width: 140px;">Tanggal</th>
-                            <th style="width: 320px;" class="no-sort">Aksi</th>
+                            <th style="width: 360px;" class="no-sort">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,6 +151,21 @@
 
                             <td class="font-weight-semibold">{{ $p->judul }}</td>
                             <td>{{ $p->keluhan }}</td>
+                            <td class="text-center">
+                                @if($p->foto_pengaduan)
+                                <a href="{{ asset('storage/' . $p->foto_pengaduan) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-image mr-1"></i> Lihat
+                                </a>
+                                @else
+                                <span class="text-muted">-</span>
+                                @endif
+                            </td>
+
+                            @if(auth()->user()->role != 'konsumen')
+                            <td class="text-center">
+                                {{ $p->petugas->name ?? '-' }}
+                            </td>
+                            @endif
 
                             <td class="text-center table-action-cell">
                                 @if($p->status == 'baru')
@@ -183,10 +202,16 @@
 
                                 @if($p->status == 'diproses')
                                 <form action="{{ route('pengaduan.update', $p->id) }}" method="POST"
-                                    style="display:inline;">
+                                    class="d-inline-flex align-items-center">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="status" value="diteruskan_lapangan">
+                                    <select name="assigned_to" class="form-control form-control-sm mr-1" required style="width: 170px;">
+                                        <option value="">Pilih petugas</option>
+                                        @foreach($petugasLapangan as $petugas)
+                                            <option value="{{ $petugas->id }}">{{ $petugas->name }}</option>
+                                        @endforeach
+                                    </select>
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <i class="fas fa-share mr-1"></i> Teruskan
                                     </button>

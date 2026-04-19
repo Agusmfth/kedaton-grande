@@ -33,7 +33,7 @@ class LaporanController extends Controller
         $tanggalAkhir = $request->tanggal_akhir;
 
         $serahTerimaQuery = SerahTerimaKunci::with('user')->latest('tanggal_serah_terima');
-        $pengaduanQuery = Pengaduan::with('user')->latest('tanggal_pengaduan');
+        $pengaduanQuery = Pengaduan::with(['user', 'petugas'])->latest('tanggal_pengaduan');
 
         if ($tanggalAwal) {
             $serahTerimaQuery->whereDate('tanggal_serah_terima', '>=', $tanggalAwal);

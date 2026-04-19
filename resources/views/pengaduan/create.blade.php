@@ -18,7 +18,7 @@
             </h3>
         </div>
 
-        <form action="{{ route('pengaduan.store') }}" method="POST">
+        <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="alert alert-info">
@@ -51,6 +51,15 @@
                     >{{ old('keluhan') }}</textarea>
                     @error('keluhan')
                         <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-0">
+                    <label>Foto Kerusakan</label>
+                    <input type="file" name="foto_pengaduan" class="form-control @error('foto_pengaduan') is-invalid @enderror" accept=".jpg,.jpeg,.png">
+                    <small class="text-muted">Opsional, format JPG/JPEG/PNG maksimal 2 MB. Foto ini membantu admin dan petugas melihat kondisi kerusakan.</small>
+                    @error('foto_pengaduan')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
             </div>

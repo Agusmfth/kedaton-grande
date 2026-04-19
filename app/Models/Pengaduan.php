@@ -12,8 +12,10 @@ class Pengaduan extends Model
 
     protected $fillable = [
     'user_id',
+    'assigned_to',
     'judul',
     'keluhan',
+    'foto_pengaduan',
     'tanggal_pengaduan',
     'status',
     'foto_perbaikan',
@@ -24,9 +26,15 @@ class Pengaduan extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function petugas()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+
     public function histori()
     {
         return $this->hasMany(PengaduanHistori::class, 'pengaduan_id')
+                    ->with('updater')
                     ->orderBy('created_at', 'asc');
     }
 }

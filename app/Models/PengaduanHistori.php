@@ -14,4 +14,9 @@ class PengaduanHistori extends Model
         'keterangan',
         'updated_by',
     ];
+
+    public function updater()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'updated_by');
+    }
 }

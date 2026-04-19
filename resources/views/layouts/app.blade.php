@@ -429,6 +429,14 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ route('users.index') }}"
+                                class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>Manajemen Akun</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-alt"></i>
                                 <p>Laporan</p>

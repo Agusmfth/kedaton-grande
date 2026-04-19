@@ -44,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function tugasLapangan()
+    {
+        return $this->hasMany(Pengaduan::class, 'assigned_to');
+    }
 }

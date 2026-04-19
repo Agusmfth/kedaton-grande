@@ -257,16 +257,25 @@
             <div class="d-md-flex justify-content-between align-items-center">
                 <div>
                     <div class="welcome-eyebrow">Kedaton Grande</div>
-                    <h4 class="welcome-title">Dashboard Admin</h4>
-                    <p class="welcome-copy">Selamat datang <strong>{{ auth()->user()->name }}</strong>. Pantau serah terima kunci, pengaduan konsumen, progres lapangan, dan laporan terbaru.</p>
+                    <h4 class="welcome-title">{{ $dashboardTitle }}</h4>
+                    <p class="welcome-copy">Selamat datang <strong>{{ auth()->user()->name }}</strong>. {{ $dashboardDescription }}</p>
                 </div>
                 <div class="quick-actions mt-3 mt-md-0">
+                    @if(auth()->user()->role == 'admin')
                     <a href="{{ route('serah-terima.index') }}" class="btn btn-soft-primary">
                         <i class="fas fa-key mr-1"></i> Serah Terima
                     </a>
+                    @endif
+                    @if(auth()->user()->role == 'lapangan')
+                    <a href="{{ route('pengaduan.index') }}" class="btn btn-soft-primary">
+                        <i class="fas fa-tools mr-1"></i> Tugas Saya
+                    </a>
+                    @endif
+                    @if(auth()->user()->role != 'lapangan')
                     <a href="{{ route('laporan.index') }}" class="btn btn-dark">
                         <i class="fas fa-file-alt mr-1"></i> Laporan
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -275,11 +284,11 @@
             <div class="col-xl-3 col-md-6">
                 <div class="metric-card metric-violet">
                     <div class="metric-icon">
-                        <i class="fas fa-key"></i>
+                        <i class="fas {{ auth()->user()->role == 'lapangan' ? 'fa-clipboard-list' : 'fa-key' }}"></i>
                     </div>
-                    <h3>{{ $jumlahSerahTerima }}</h3>
-                    <p>Serah Terima Kunci</p>
-                    <a href="{{ route('serah-terima.index') }}">Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    <h3>{{ auth()->user()->role == 'lapangan' ? $jumlahPengaduan : $jumlahSerahTerima }}</h3>
+                    <p>{{ auth()->user()->role == 'lapangan' ? 'Total Tugas Saya' : 'Serah Terima Kunci' }}</p>
+                    <a href="{{ auth()->user()->role == 'lapangan' ? route('pengaduan.index') : route('serah-terima.index') }}">Detail <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
 
@@ -288,8 +297,8 @@
                     <div class="metric-icon">
                         <i class="fas fa-comments"></i>
                     </div>
-                    <h3>{{ $jumlahPengaduan }}</h3>
-                    <p>Pengaduan Konsumen</p>
+                    <h3>{{ auth()->user()->role == 'lapangan' ? $statusPengaduan['diteruskan_lapangan'] : $jumlahPengaduan }}</h3>
+                    <p>{{ auth()->user()->role == 'lapangan' ? 'Menunggu Dikerjakan' : 'Pengaduan Konsumen' }}</p>
                     <a href="{{ route('pengaduan.index') }}">Detail <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
@@ -299,9 +308,9 @@
                     <div class="metric-icon">
                         <i class="fas fa-tools"></i>
                     </div>
-                    <h3>{{ $jumlahTugasPerbaikan }}</h3>
-                    <p>Tugas Perbaikan</p>
-                    <a href="{{ route('pengaduan.index', ['status' => 'diteruskan_lapangan']) }}">Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    <h3>{{ auth()->user()->role == 'lapangan' ? $statusPengaduan['dikerjakan'] : $jumlahTugasPerbaikan }}</h3>
+                    <p>{{ auth()->user()->role == 'lapangan' ? 'Sedang Dikerjakan' : 'Tugas Perbaikan' }}</p>
+                    <a href="{{ route('pengaduan.index', ['status' => auth()->user()->role == 'lapangan' ? 'dikerjakan' : 'diteruskan_lapangan']) }}">Detail <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
 
@@ -361,8 +370,9 @@
                         <table class="table dashboard-table mb-0">
                             <thead>
                                 <tr>
-                                    <th>Konsumen</th>
+                                    <th>Diajukan Oleh</th>
                                     <th>Judul</th>
+                                    <th>Dikerjakan Oleh</th>
                                     <th>Status</th>
                                     <th>Tanggal</th>
                                 </tr>
@@ -375,6 +385,7 @@
                                         {{ $item->user->name ?? '-' }}
                                     </td>
                                     <td>{{ $item->judul }}</td>
+                                    <td>{{ $item->petugas->name ?? 'Belum ditugaskan' }}</td>
                                     <td>
                                         @if($item->status == 'baru')
                                             <span class="badge badge-secondary">Baru</span>
@@ -392,7 +403,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted py-4">Belum ada pengaduan.</td>
+                                    <td colspan="5" class="text-center text-muted py-4">Belum ada pengaduan.</td>
                                 </tr>
                                 @endforelse
                             </tbody>
@@ -402,6 +413,7 @@
             </div>
         </div>
 
+        @if(auth()->user()->role != 'lapangan')
         <div class="dashboard-card">
             <div class="card-header d-flex align-items-center">
                 <h3 class="card-title mb-0">
@@ -441,5 +453,6 @@
                 </table>
             </div>
         </div>
+        @endif
     </div>
 </x-app-layout>

@@ -5,7 +5,7 @@
     <div class="container-fluid d-flex justify-content-between align-items-center">
         <div>
             <h4 class="mb-1 font-weight-bold">Laporan</h4>
-            <p class="text-muted mb-0">Rekap data serah terima kunci dan pengaduan konsumen.</p>
+            <p class="text-muted mb-0">Rekap serah terima, pelapor pengaduan, dan petugas yang menangani.</p>
         </div>
         <a href="{{ route('laporan.cetak', request()->query()) }}" target="_blank" class="btn btn-danger">
             <i class="fas fa-print mr-1"></i> Cetak Laporan
@@ -102,6 +102,7 @@
             </h3>
         </div>
         <div class="card-body table-responsive">
+            @if($serahTerima->count() > 0)
             <table class="table table-bordered table-hover kg-datatable">
                 <thead class="text-center bg-light">
                     <tr>
@@ -114,7 +115,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($serahTerima as $item)
+                    @foreach($serahTerima as $item)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ $item->user->name ?? '-' }}</td>
@@ -123,13 +124,15 @@
                         <td class="text-center">{{ $item->tanggal_serah_terima }}</td>
                         <td>{{ $item->keterangan ?? '-' }}</td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center text-muted">Belum ada data serah terima kunci.</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-inbox fa-2x mb-2"></i>
+                <div>Belum ada data serah terima kunci.</div>
+            </div>
+            @endif
         </div>
     </div>
 
@@ -140,24 +143,37 @@
             </h3>
         </div>
         <div class="card-body table-responsive">
+            @if($pengaduan->count() > 0)
             <table class="table table-bordered table-hover kg-datatable">
                 <thead class="text-center bg-light">
                     <tr>
                         <th width="60">No</th>
-                        <th>Nama Konsumen</th>
+                        <th>Diajukan Oleh</th>
                         <th>Judul</th>
                         <th>Keluhan</th>
+                        <th>Foto Kerusakan</th>
+                        <th>Dikerjakan Oleh</th>
                         <th>Status</th>
                         <th>Tanggal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($pengaduan as $item)
+                    @foreach($pengaduan as $item)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ $item->user->name ?? '-' }}</td>
                         <td>{{ $item->judul }}</td>
                         <td>{{ $item->keluhan }}</td>
+                        <td class="text-center">
+                            @if($item->foto_pengaduan)
+                            <a href="{{ asset('storage/' . $item->foto_pengaduan) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-image mr-1"></i> Lihat
+                            </a>
+                            @else
+                            <span class="text-muted">-</span>
+                            @endif
+                        </td>
+                        <td>{{ $item->petugas->name ?? '-' }}</td>
                         <td class="text-center">
                             @if($item->status == 'baru')
                                 <span class="badge badge-secondary">Baru</span>
@@ -173,13 +189,15 @@
                         </td>
                         <td class="text-center">{{ $item->tanggal_pengaduan }}</td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center text-muted">Belum ada data pengaduan.</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-inbox fa-2x mb-2"></i>
+                <div>Belum ada data pengaduan.</div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
